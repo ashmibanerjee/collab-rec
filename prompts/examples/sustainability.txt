@@ -1,0 +1,60 @@
+-------------------------------
+🔎 EXAMPLES (illustrate correct vs. incorrect ranking behaviour)
+--------------------------------------------------------------
+📌 EXAMPLE SETUP
+User query: "Suggest European cities for a calm, healthy September getaway. I want fresh air and places that are easy to walk around."
+User sustainability preferences: { "AQI": "low", "walkability": "high", "seasonality": "low" }
+Previous Recommendation:
+['Aalborg', 'Bergen', 'Bern', 'Cluj-Napoca', 'Copenhagen', 'Ljubljana', 'Malmo', 'Munich', 'Reykjavik', 'Zurich']
+Current Offer:
+['Zurich', 'Reykjavik', 'Ljubljana', 'Munich', 'Berlin', 'Amsterdam', 'Copenhagen', 'Bern', 'Malmo', 'Vienna']
+Other Candidate Options:
+['Aalborg', 'Bergen', 'Braga', 'Cluj-Napoca', 'Tampere']
+Feedback: "Still too many crowded cities like Berlin and Amsterdam—can you lean more into places with better air and less seasonality?"
+
+------------------------------------------
+❌ BAD EXAMPLE 1 (keeps too many unsustainable cities)
+------------------------------------------
+{
+  "City": ["Zurich", "Reykjavik", "Ljubljana", "Munich", "Berlin",
+           "Amsterdam", "Copenhagen", "Bern", "Malmo", "Vienna"],
+  "Scores": [96,95,94,93,91,90,89,87,86,85],
+  "Reasoning": "All cities have at least medium sustainability performance."
+}
+🔴 Why bad? Retains all current-offer cities including Berlin and Amsterdam, which violate the user's low-crowdedness and AQI constraints.
+------------------------------------------
+❌ BAD EXAMPLE 2 (throws away too many)
+------------------------------------------
+{
+  "City": ["Aalborg", "Bergen", "Braga", "Cluj-Napoca", "Tampere",
+           "Zurich", "Ljubljana", "Reykjavik", "Copenhagen", "Bern"],
+  "Scores": [97,96,95,94,92,91,90,89,88,87],
+  "Reasoning": "Removed cities with poor sustainability and replaced with quieter options."
+}
+🔴 Why bad? Only 5 cities from the current offer are retained. Violates the rule: keep ≥ 7 when possible.
+------------------------------------------
+✅ GOOD EXAMPLE (keeps seven sustainable cities)
+------------------------------------------
+{
+  "City": ["Zurich", "Reykjavik", "Ljubljana", "Munich", "Copenhagen",
+           "Bern", "Malmo", "Aalborg", "Cluj-Napoca", "Bergen"],
+  "Scores": [98,96,94,93,92,91,90,89,88,87],
+  "Reasoning": "Removed Berlin and Amsterdam due to air quality and crowding, and
+added three cities with excellent walkability and low seasonality. Retained seven from the current offer."
+}
+
+🟢 Why good? Replaced two poorly performing cities with more sustainable options while keeping seven suitable cities from the current offer.
+
+------------------------------------------
+✅ DEFAULT BEHAVIOR WHEN NO SUSTAINABILITY PREFERENCES
+------------------------------------------
+If the user query does not include explicit sustainability constraints, select the most sustainable cities overall, based on aggregated AQI, walkability, and low seasonality.
+
+Example Default Recommendation (no user constraints):
+{
+  "City": ["Zurich", "Reykjavik", "Ljubljana", "Copenhagen", "Bern",
+           "Aalborg", "Malmo", "Munich", "Braga", "Tampere"],
+  "Scores": [98,96,95,94,93,92,91,90,89,88],
+  "Reasoning": "These cities consistently rank high across air quality, walkability,
+and off-season crowd levels, making them ideal for eco-conscious travelers."
+}

@@ -1,0 +1,44 @@
+{
+    "constraint": {
+        "role": "planner",
+        "filter_type": "user's travel preferences",
+        "filter_context": "The user's travel preferences include the budget, travel interests and and visit month.",
+        "filters": [
+            "budget",
+            "month", 
+            "interests"
+        ]
+    },
+    "sustainability": {
+        "role": "travel agent prioritizing in sustainable travel choices",
+        "filter_type": "sustainability constraints",
+        "filter_context": "The sustainability constraints can include AQI (Air Quality Index), Walkability or Low Seasonality/Crowdedness. If the user's query contains explicit sustainability preferences, those need to be considered for recommendation. If there are no explicit sustainability preferences, then please provide the MOST sustainable cities.", 
+        "filters": [
+            "aqi",
+            "walkability",
+            "seasonality"
+        ]
+    },
+    "interest": {
+        "role": "travel recommender system", 
+        "filter_type": "travel interests", 
+        "filter_context": "The user's travel interests indicate what the user is interested to see/do when they travel. For example, they might be interested in cultural sites or natural landscapes.",
+        "filters": [
+            "interests"
+        ]
+    },
+    "popularity": {
+        "role": "tourism expert",
+        "filter_type": "popularity preference",
+        "filter_context": "The popularity preference is determined by the visitor counts for the cities. For example, high popularity implies that the user wants to visit very touristic destinations which can be crowded. Low popularity would indicate that the user is looking for off-beaten destinations, which have comparatively lower visitor counts. These are also correlated with the number of points of interaction (POIs) in a city that a tourist may like to visit. Low popularity cities generally have upto 150 POIs. Medium popularity cities have between 150 and 400 POIs whereas high popularity cities have between 400 and 9000 POIs for tourists. If a user does not mention their popularity preference, your task is to maximize diversity by recommending medium and low popular cities.",
+        "filters": [
+            "popularity"
+        ]
+    },
+    "all":{
+        "role": "single agent", 
+        "filter_type": "",
+        "filter_context": "",
+        "filters": []
+    }
+}

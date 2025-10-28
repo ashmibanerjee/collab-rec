@@ -1,0 +1,8 @@
+Here is the user's query: {{query}} 
+Given this {{filter_type}} preference of the user: {{filters}}
+Your earlier recommendation: {{valid_candidates}}
+Invalid candidates: {{invalid_candidates}}
+
+Available options: {{available_candidates}}
+
+Please provide your substitutions, in the instructed format.
