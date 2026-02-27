@@ -31,7 +31,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+logs/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -182,9 +182,9 @@ cython_debug/
 .abstra/
 
 # Visual Studio Code
-#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
+#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#  and can be added to the global gitignore or merged into this file. However, if you prefer, 
+#  and can be added to the global gitignore or merged into this file. However, if you prefer,
 #  you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 
@@ -205,3 +205,17 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+.idea/
+prompts/old
+src/adk/.config
+src/adk/agents/.adk
+data/collab-rec-2026/input-data/
+notebooks/.ipynb_checkpoints
+data/
+experiments/.config/
+.DS_Store
+.jbeval
+src/adk/logs/
+gpt-oss-120b/
+gpt-oss-20b/
+gemma-3-27b-it/

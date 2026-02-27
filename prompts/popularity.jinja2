@@ -1,0 +1,13 @@
+{% extends "base.jinja2" %}
+
+{% block role_constraints %}
+    {% include "role_popularity.jinja2" %}
+{% endblock %}
+
+{% block examples %}
+    {% include "example_popularity.jinja2" %}
+{% endblock %}
+
+{% block negotiation_context %}
+    {% include "negotiation_context.jinja2" %}
+{% endblock %}

@@ -1,3 +1,0 @@
-Here is the user's query: {{query}}
-
-What is your recommendation?

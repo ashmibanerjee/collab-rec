@@ -1,4 +1,0 @@
-Here is the user's query: {{query}}
-Given this {{filter_type}} preference of the user: {{filters}}
-
-What is your recommendation?

@@ -1,0 +1,54 @@
+-------------------------------
+🔎 EXAMPLES (illustrate correct vs. incorrect ranking behaviour)
+--------------------------------------------------------------
+
+📌 EXAMPLE SETUP
+User query: "I'm planning a September trip to Europe. I'd like beach destinations that aren't too expensive and have mild weather."
+User travel preferences: { "budget": "low", "interests": ["beach"], "month": "September" }
+Previous Recommendation:
+['Antalya', 'Varna', 'Canakkale', 'Lisbon', 'Barcelona', 'Bari', 'Valencia', 'Burgas', 'Izmir', 'Zaragoza']
+Current Offer:
+['Barcelona', 'Izmir', 'Antalya', 'Valencia', 'Bari', 'Naples', 'Varna', 'Burgas', 'Rome', 'Nice']
+Other Candidate Options:
+['Canakkale', 'Cagliari', 'Madrid', 'Split', 'Zaragoza']
+Feedback: “Rome and Nice are too pricey. I’m looking for warmer beach towns with more affordable options.”
+
+------------------------------------------
+❌ BAD EXAMPLE 1 (keeps expensive cities despite user constraints)
+------------------------------------------
+{
+  "candidates": ["Barcelona", "Izmir", "Antalya", "Valencia", "Bari",
+           "Naples", "Rome", "Varna", "Burgas", "Nice"],
+  "explanation": "All cities offer beach access and nice weather in September."
+}
+🔴 Why bad? Keeps expensive cities like Rome and Nice, ignoring the budget constraint. Doesn’t show active filtering.
+------------------------------------------
+❌ BAD EXAMPLE 2 (throws away too many relevant offers)------------------------------------------
+{
+  "candidates": ["Antalya", "Izmir", "Canakkale", "Cagliari", "Varna",
+           "Burgas", "Zaragoza", "Split", "Bari", "Valencia"],
+  "explanation": "Removed costly cities and replaced them with budget options."
+}
+🔴 Why bad? Only five cities retained from the Current Offer (needs to keep ≥ 7). Too aggressive in pruning.
+
+------------------------------------------
+✅ GOOD EXAMPLE (keeps seven, replaces three poorly matched cities)
+------------------------------------------
+{
+  "candidates": ["Izmir", "Antalya", "Valencia", "Bari", "Varna",
+           "Burgas", "Barcelona", "Canakkale", "Cagliari", "Zaragoza"],
+  "explanation": "Kept seven well-matched cities from the current offer. Removed costly options (Rome, Nice, Naples) and added three budget-friendly beach destinations better aligned with the user's September travel preferences."
+}
+🟢 Why good? Meets budget + beach + weather constraints, keeps 7/10 from current offer, adjusts the rest with suitable low-cost options.
+
+------------------------------------------
+✅ DEFAULT BEHAVIOR WHEN NO USER TRAVEL PREFERENCES GIVEN
+------------------------------------------
+If the user provides no explicit travel preferences, select a balanced list of cities with good general travel appeal and affordability in the given month.
+
+Example Default Recommendation (no explicit constraints, visit month = September):
+{
+  "candidates": ["Lisbon", "Barcelona", "Istanbul", "Porto", "Bologna",
+           "Valencia", "Athens", "Naples", "Zagreb", "Braga"],
+  "explanation": "Generalist cities with broad appeal, good value, and favorable weather in September."
+}

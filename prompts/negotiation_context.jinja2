@@ -1,0 +1,67 @@
+{% if moderator_context %}
+########################################
+## REVISION CONTEXT (Round {{ moderator_context.round }})
+########################################
+
+You previously generated a ranked list of cities.
+
+That list is NOT final.
+
+You must now generate a REVISED ranked list of EXACTLY {{ k }} cities.
+
+Moderator feedback for you:
+{{ moderator_context.agent_feedback }}
+
+Your previous recommendations:
+{{ moderator_context.previous_recommendations }}
+
+Current Collective Offer (Top {{ k }} cities from previous round):
+{{ moderator_context.collective_offer }}
+
+Additional Candidates Available (cities you can use to replace up to 3 from collective offer):
+{{ moderator_context.additional_candidates }}
+
+Cities that are REJECTED and MUST NOT be recommended:
+{{ moderator_context.collective_rejection }}
+
+    YOUR TASK:
+        Rank the union of **Current Collective Offer** and **Other available Candidate Options**
+    according to the user query and structured filters,
+    generating a NEW ranked list of EXACTLY {{ k }} cities.
+RANKING RULES
+1. **Keep at least seven (>= 7) cities that already appear in the Current Offer.**
+– This limits you to at most {{k_reject}} replacements without ever phrasing it as "reject
+<= 3."
+2. Score every candidate 1 (worst) . . . 100 (best) for overall suitability, using:
+– user’s {{filter_type}}. {{filter_context}}
+3. Pick the ten highest-scoring cities **while honoring Rule 1**.
+4. Sort the chosen ten from highest to lowest score.
+
+MANDATORY REVISION RULES:
+1. You MUST output EXACTLY {{ k }} cities
+2. Your recommendations MUST come from: Current Collective Offer + Additional Candidates
+3. You MUST keep at least 7 cities from the Current Collective Offer
+4. You CAN replace at most 3 cities with cities from Additional Candidates
+5. You MUST NOT recommend ANY city from the rejected list above
+6. You MUST NOT recommend cities outside the Current Collective Offer and Additional Candidates
+7. You MUST revise ordering or composition if feedback indicates issues
+8. You MUST NOT say "no change", "same as before", or similar
+
+    9. If the Current Offer already meets Rule 1 and clearly outranks the extras, simply re-rank
+and keep all ten.
+10. You MUST include an updated explanation field that EXPLICITLY addresses ALL of the following:
+
+   YOUR EXPLANATION MUST INCLUDE:
+   a) "From the Current Collective Offer, I kept [list the 7+ cities you kept] to maintain continuity."
+   b) "I replaced [list replaced cities if any] with [list new cities from Additional Candidates] because [reason]."
+      OR "I kept all 10 cities from the Current Collective Offer without replacements."
+   c) "I avoided all rejected cities: [confirm none of your recommendations are in the rejected list]."
+   d) "In response to the moderator's feedback about [specific feedback point], I [action taken]."
+
+VIOLATIONS WILL RESULT IN:
+- Recommending rejected cities → High hallucination penalty (hallucination_rate = 1.0)
+- Replacing more than 3 cities → Low reliability score
+- Recommending cities outside allowed sets → Filtered out as invalid
+- Incomplete explanation → Poor feedback acknowledgment score
+{% endif %}
+
