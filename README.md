@@ -19,6 +19,95 @@ The repository includes:
 - Example prompts for each agent
 - Datasets used in experiments
 
+## Dependency Management (Poetry)
+
+This project now uses `poetry` as the source of truth for dependencies (`pyproject.toml`).
+
+Install dependencies locally:
+
+```bash
+poetry install
+```
+
+Run the API locally (without Docker):
+
+```bash
+poetry run uvicorn src.server.main:app --host 0.0.0.0 --port 8005
+```
+
+## Run with Docker (Local Deployment)
+
+The API exposes the multi-agent, multi-round negotiation endpoint at:
+`POST /run-negotiation-pipeline` (Code in: `src/server/endpoints.py`)
+
+### 1) Prepare environment variables
+
+Create a local env file for Docker:
+
+```bash
+cp .env.docker.example .env.docker
+```
+
+Fill at least:
+- `GOOGLE_API_KEY` for Gemini-based runs.
+
+If you use Vertex-backed models (for example Claude via Vertex), also set:
+- `GOOGLE_APPLICATION_CREDENTIALS`
+- `GOOGLE_CLOUD_PROJECT`
+- `GOOGLE_CLOUD_LOCATION`
+- `VERTEXAI_LOCATION`
+
+### 2) Build and run the API container
+
+The Docker image installs dependencies with `poetry` from `pyproject.toml`.
+
+```bash
+docker build -t collab-rec-api .
+docker run --rm -p 8005:8005 --env-file .env.docker collab-rec-api
+```
+
+Or with Docker Compose:
+
+```bash
+set -a
+source .env.docker
+set +a
+docker compose up --build
+```
+
+### 3) Call the negotiation endpoint
+
+OpenAPI docs:
+- `http://localhost:8005/docs`
+
+Example request:
+
+```bash
+curl -X POST "http://localhost:8005/run-negotiation-pipeline?rounds=3&min_rounds=1&model_name=gemini-2.5-flash" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Plan a 5-day Europe trip with local food and walkable cities",
+    "filters": {
+      "budget": "medium",
+      "month": "May",
+      "interests": "food",
+      "popularity": "low",
+      "aqi": "good",
+      "walkability": "great",
+      "seasonality": "medium"
+    }
+  }'
+```
+
+### 4) Stop the app
+
+```bash
+docker compose down
+```
+
+For `docker run`, stop with `Ctrl+C` in the running terminal.
+
+
 ## Citation
 If you use this work, please cite the paper:
 

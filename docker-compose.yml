@@ -1,0 +1,15 @@
+services:
+  collab-rec-api:
+    build: .
+    container_name: collab-rec-api
+    ports:
+      - "8005:8005"
+    environment:
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
+      GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION:-}
+      VERTEXAI_LOCATION: ${VERTEXAI_LOCATION:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    restart: unless-stopped
+

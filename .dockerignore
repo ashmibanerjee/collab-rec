@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.ipynb
+.pytest_cache/
+.venv/
+venv/
+.git/
+.gitignore
+.DS_Store
+plots/
+notebooks/
+analysis/
+experiments/__pycache__/
+src/**/__pycache__/
+

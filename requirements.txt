@@ -1,6 +1,7 @@
 jinja2
 python-dotenv
 fastapi
+uvicorn[standard]
 google-adk
 anthropic[vertex]
 litellm
