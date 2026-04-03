@@ -29,10 +29,16 @@ Install `uv` (if not already installed):
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Sync project dependencies (including dev):
+Sync core project dependencies (including dev tools; macOS-compatible):
 
 ```bash
 uv sync --dev
+```
+
+If you are on Linux x86_64 and want to run local GPU models with `vllm`, install the optional GPU group:
+
+```bash
+uv sync --dev --group gpu
 ```
 
 
@@ -55,6 +61,8 @@ Optional (needed for Vertex-backed models, for example Claude via Vertex):
 ## Inference Backends
 
 ### Option A: Local GPU models with vLLM (ADK-compatible)
+`vllm` is supported via the optional `gpu` dependency group on Linux x86_64.
+
 Current code-level routing in `src/adk/agents/agent.py`:
 - `model_name=gemma-4b` -> `google/gemma-3-4b-it` at `http://localhost:8000/v1`
 - `model_name=gemma-12b` -> `google/gemma-3-12b-it` at `http://localhost:8001/v1`
@@ -131,7 +139,13 @@ Endpoint: `POST /run-negotiation-pipeline` (implemented in `src/server/endpoints
 OpenAPI docs:
 - `http://localhost:8005/docs`
 
+FastAPI interface preview:
+![FastAPI interface](images/swagger%20api.png)
+
 Example call (swap `model_name` as needed):
+
+Negotiation endpoint example:
+![Negotiation endpoint](images/negotiation-ep.png)
 
 ```bash
 curl -X POST "http://localhost:8005/run-negotiation-pipeline?rounds=3&min_rounds=1&model_name=gemma-4b" \

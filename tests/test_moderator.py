@@ -8,7 +8,8 @@ sys.modules["google.adk.agents"] = mock_adk
 
 from src.adk.agents.moderator import ModeratorAgent
 from src.adk.agents.moderator_utils import weighted_reliability_score, post_process_response
-from constants import ALLOWED_CITIES, CITIESfrom src.adk.agents.moderator_utils import weighted_reliability_score, post_process_response
+from constants import ALLOWED_CITIES, CITIES
+from src.adk.agents.moderator_utils import weighted_reliability_score, post_process_response
 from constants import ALLOWED_CITIES, CITIES
 
 class MockAgent:

@@ -2,7 +2,7 @@ import numpy as np
 from typing import List, Dict, Any, Set
 import logging
 
-from k_base.context_retrieval import ContextRetrieval
+from src.k_base.context_retrieval import ContextRetrieval
 
 logger = logging.getLogger(__name__)
 

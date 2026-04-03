@@ -4,7 +4,7 @@ Early stopping logic for collaborative recommendation.
 from typing import Dict, Any, List, Optional
 import logging
 
-from adk.agents.moderator_utils.compute_scores import compute_agent_success_scores
+from src.adk.agents.moderator_utils.compute_scores import compute_agent_success_scores
 
 logger = logging.getLogger(__name__)
 
@@ -201,4 +201,3 @@ class EarlyStoppingManager:
             Dictionary mapping thresholds to rounds when they were met (or None)
         """
         return self.early_stop_thresholds.copy()
-

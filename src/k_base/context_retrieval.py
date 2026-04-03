@@ -1,19 +1,11 @@
 import json, ast
-import argparse, sys, os
+import argparse, os
 from constants import CITIES
 import pandas as pd
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[4]  # Navigate up to collab-rec-2026/
-sys.path.insert(0, str(PROJECT_ROOT))
-
-DATA_DIR = os.path.join(os.path.dirname(__file__), "../../data/collab-rec-2026/input-data/kb/")
-
-INTEREST_TYPE_MAP = {"see": "see",
-                     "do": "do",
-                     "drink": "drink at",
-                     "eat": "eat at",
-                     "go": "go to"}
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+KB_CSV_PATH = PROJECT_ROOT / "input-data" / "kb" / "eu-cities-database.csv"
 
 
 class ContextRetrieval:
@@ -26,8 +18,8 @@ class ContextRetrieval:
         Initializes the KnowledgeGraphRetrieval class.
         """
 
-        # Load source database
-        self.source_df = pd.read_csv(DATA_DIR + "eu-cities-database_2.csv")
+        # Load source database from a repo-relative path that works in Docker and local runs.
+        self.source_df = pd.read_csv(KB_CSV_PATH)
 
     def get_cities_from_filters(self, filters: dict) -> list:
         df = self.source_df.copy()

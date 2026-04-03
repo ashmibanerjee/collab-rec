@@ -10,7 +10,7 @@ from google.adk.runners import Runner
 from google.genai import types
 from pydantic import BaseModel
 
-from adk.agents.agent import create_specialized_agent
+from src.adk.agents.agent import create_specialized_agent
 from schema.agent_request import UserFilters
 
 PROJECT_ROOT = Path(__file__).resolve().parents[4]  # Navigate up to collab-rec-2026/

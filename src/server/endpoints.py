@@ -53,19 +53,16 @@ async def get_agent_response(request: AgentRequest, model_name: str = "gemini-2.
 @router.post("/run-negotiation-pipeline", response_model=List[AgentResponse] | List[dict], response_model_exclude_none=False)
 async def get_pipeline(
     request: AgentRequest,
-    rounds: int = 3,
-    early_stopping_threshold: float = None,
-    min_rounds: int = 1,
+    rounds: int = 10,
     model_name: str = "gemini-2.5-flash"
 ):
     """
     Run the multi-round negotiation pipeline.
 
     Args:
-        request: Agent request with query and filters
-        rounds: Maximum number of rounds (default: 3)
-        early_stopping_threshold: Threshold for early stopping (None=MN, 0.2=M20, 0.6=M60)
-        min_rounds: Minimum rounds before evaluating early stopping (default: 1)
+        :param request: Agent request with query and filters
+        :param rounds: Maximum number of rounds
+        :param model_name: Model name to use for the agents in the pipeline
     """
     try:
         model_init = await create_pipeline(

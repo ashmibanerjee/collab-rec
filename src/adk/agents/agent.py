@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 from google.adk.agents.llm_agent import Agent
 from jinja2 import Environment, FileSystemLoader
 from dotenv import load_dotenv
-import os, sys
+import os
 from pathlib import Path
 import litellm
 from google.adk.models.anthropic_llm import Claude
@@ -17,8 +17,8 @@ litellm.num_retries = 5  # Retry 3 times for transient errors
 # litellm._turn_on_debug()
 
 # Add project root to sys.path to make imports work from any location
-PROJECT_ROOT = Path(__file__).resolve().parents[4]  # Navigate up to collab-rec-2026/
-sys.path.insert(0, str(PROJECT_ROOT))
+# PROJECT_ROOT = Path(__file__).resolve().parents[4]  # Navigate up to collab-rec-2026/
+# sys.path.insert(0, str(PROJECT_ROOT))
 
 ENV_PATH = Path(__file__).resolve().parents[1] / ".config" / ".env"
 load_dotenv(dotenv_path=ENV_PATH)

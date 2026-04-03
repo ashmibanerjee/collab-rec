@@ -5,7 +5,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 from dotenv import load_dotenv
 
-from adk.agents.gptParallelAgents import GPTParallelAgent
+from src.adk.agents.gptParallelAgents import GPTParallelAgent
 from src.adk.agents.agent import create_specialized_agent
 from src.adk.agents.moderator import ModeratorAgent
 from src.schema.agent_request import AgentRequest
