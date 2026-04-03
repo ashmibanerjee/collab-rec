@@ -20,12 +20,21 @@ We propose Collab-REC, a multi-agent framework designed to counteract popularity
 
 ## Reproducibility Checklist
 
-### 1) Install dependencies (Poetry)
-This project uses `poetry` as the dependency source of truth (`pyproject.toml`).
+### 1) Install dependencies with uv
+This repository uses `uv` for fast, reproducible dependency management via `pyproject.toml` and `uv.lock`.
+
+Install `uv` (if not already installed):
 
 ```bash
-poetry install
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
+Sync project dependencies (including dev):
+
+```bash
+uv sync --dev
+```
+
 
 ### 2) Configure environment variables
 Create a local env file:
@@ -82,23 +91,24 @@ Use `model_name=gemini-2.5-flash` (or other configured cloud route) when calling
 
 | Mode | API Start | Model Backend |
 |---|---|---|
-| Local (host) | `poetry run uvicorn src.server.main:app --host 0.0.0.0 --port 8005` | Local `vllm` or cloud |
+| Local (host) | `uv run uvicorn src.server.main:app --host 0.0.0.0 --port 8005` | Local `vllm` or cloud |
 | Docker (single container) | `docker run --rm -p 8005:8005 --env-file .env.docker collab-rec-api` | Cloud by default; local `vllm` requires network config |
 | Docker Compose | `docker compose up --build` | Cloud by default; local `vllm` requires same network + URL update |
 
 ## Run the API
 
-Build image (once per change):
+Build Docker image (once per change):
 
 ```bash
 docker build -t collab-rec-api .
 ```
 
-Run locally (host):
+Run locally with uv:
 
 ```bash
-poetry run uvicorn src.server.main:app --host 0.0.0.0 --port 8005
+uv run uvicorn src.server.main:app --host 0.0.0.0 --port 8005
 ```
+
 
 Run in Docker:
 

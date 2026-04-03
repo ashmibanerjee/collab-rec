@@ -1,31 +1,28 @@
-[tool.poetry]
+[project]
 name = "collab-rec"
 version = "0.1.0"
 description = "Collab-REC multi-agent tourism recommendation framework"
-authors = ["Collab-REC Authors"]
 readme = "README.md"
-package-mode = false
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "jinja2",
+  "python-dotenv",
+  "fastapi",
+  "uvicorn[standard]",
+  "google-adk",
+  "anthropic[vertex]",
+  "litellm",
+  "pandas",
+  "numpy",
+  "matplotlib",
+  "num2words",
+  "vllm",
+  "huggingface-hub",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-jinja2 = "*"
-python-dotenv = "*"
-fastapi = "*"
-uvicorn = { extras = ["standard"], version = "*" }
-google-adk = "*"
-anthropic = { extras = ["vertex"], version = "*" }
-litellm = "*"
-pandas = "*"
-numpy = "*"
-matplotlib = "*"
-num2words = "*"
-vllm = "*"
-huggingface-hub = { extras = ["cli"], version = "*" }
-
-[tool.poetry.group.dev.dependencies]
-pytest = "*"
+[dependency-groups]
+dev = ["pytest"]
 
 [build-system]
-requires = ["poetry-core>=1.9.0"]
-build-backend = "poetry.core.masonry.api"
-
+requires = ["hatchling"]
+build-backend = "hatchling.build"

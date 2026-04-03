@@ -46,8 +46,8 @@ class MILPBaseline:
         sust = self._get_numeric_city_value(city, ["sustainability_score"], default=0)
         popularity = self._get_numeric_city_value(city, ["popularity_score", "weighted_pop_score", "pop_score"],
                                                   default=0)
-        pop_inv = 1.0 - popularity
-        return relevance_ratio + sust + pop_inv
+        # pop_inv = 1.0 - popularity
+        return relevance_ratio + sust + popularity
 
     def solve_query(self, filters: Filters) -> tuple[list[str], float]:
         all_cities = self.kb["city"].dropna().astype(str).unique().tolist()
