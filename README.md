@@ -139,12 +139,7 @@ Endpoint: `POST /run-negotiation-pipeline` (implemented in `src/server/endpoints
 OpenAPI docs:
 - `http://localhost:8005/docs`
 
-FastAPI interface preview:
-![FastAPI interface](images/swagger%20api.png)
-
-Example call (swap `model_name` as needed):
-
-Negotiation endpoint example:
+FastAPI interface preview & negotiation endpoint example:
 ![Negotiation endpoint](images/negotiation-ep.png)
 
 ```bash
