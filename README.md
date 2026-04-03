@@ -140,7 +140,12 @@ OpenAPI docs:
 - `http://localhost:8005/docs`
 
 FastAPI interface preview & negotiation endpoint example:
-![Negotiation endpoint](images/negotiation-ep.png)
+
+<a href="images/negotiation-ep.png" target="_blank" rel="noopener noreferrer">
+  <img src="images/negotiation-ep.png" alt="Negotiation endpoint" width="100%" />
+</a>
+
+Full-size image: [images/negotiation-ep.png](images/negotiation-ep.png)
 
 ```bash
 curl -X POST "http://localhost:8005/run-negotiation-pipeline?rounds=3&min_rounds=1&model_name=gemma-4b" \
