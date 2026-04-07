@@ -100,10 +100,13 @@ Use `model_name=gemini-2.5-flash` (or other configured cloud route) when calling
 | Mode | API Start | Model Backend |
 |---|---|---|
 | Local (host) | `uv run uvicorn src.server.main:app --host 0.0.0.0 --port 8005` | Local `vllm` or cloud |
-| Docker (single container) | `docker run --rm -p 8005:8005 --env-file .env.docker collab-rec-api` | Cloud by default; local `vllm` requires network config |
+| Docker (single container, local build) | `docker run --rm -p 8005:8005 --env-file .env.docker collab-rec-api` | Cloud by default; local `vllm` requires network config |
+| Docker (single container, Docker Hub image) | `docker run --rm -p 8005:8005 --env-file .env.docker ashmib/collab-rec:latest` | Cloud by default; local `vllm` requires network config |
 | Docker Compose | `docker compose up --build` | Cloud by default; local `vllm` requires same network + URL update |
 
 ## Run the API
+
+### Option A: Build and run locally
 
 Build Docker image (once per change):
 
@@ -116,7 +119,6 @@ Run locally with uv:
 ```bash
 uv run uvicorn src.server.main:app --host 0.0.0.0 --port 8005
 ```
-
 
 Run in Docker:
 
@@ -131,6 +133,29 @@ set -a
 source .env.docker
 set +a
 docker compose up --build
+```
+
+### Option B: Use the prebuilt Docker Hub image
+
+Docker Hub image:
+- https://hub.docker.com/r/ashmib/collab-rec
+
+Pull and run:
+
+```bash
+docker pull ashmib/collab-rec:latest
+docker run --rm -p 8005:8005 --env-file .env.docker ashmib/collab-rec:latest
+```
+
+Use with Docker Compose (without local build):
+
+A ready-to-use compose file is included at `docker-compose.hub.yml`.
+
+```bash
+set -a
+source .env.docker
+set +a
+docker compose -f docker-compose.hub.yml up
 ```
 
 ## API Usage
